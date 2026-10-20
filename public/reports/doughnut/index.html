@@ -1,0 +1,38 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="课程实验报告、完整配置与运行截图"><title>环形图的绘制 · 个人作品集</title><link rel="stylesheet" href="../style.css"></head><body><header><a class="brand" href="../index.html">作品集 <span>/ 实验报告</span></a><nav><a href="../index.html">全部报告</a></nav></header><main id="top" class="detail"><div class="report-heading"><p class="eyebrow">数据可视化 / 实验五 · 第 12 题</p><h1>环形图的绘制</h1><p class="lead">用环形图呈现 App 六个功能模块的月使用次数。</p><div class="actions"><a class="button primary" href="demo.html" target="_blank" rel="noopener">运行实验 ↗</a><a class="button" href="#code">查看完整配置 ↓</a></div></div><div class="reading"><aside aria-label="报告目录"><a href="#objective">实验目的</a><a href="#data">实验数据</a><a href="#method">实现要点</a><a href="#results">运行结果</a><a href="#code">完整配置</a></aside><div class="article"><section id="objective"><h2>实验目的</h2><p>理解内外半径与环形图的实现方式。</p></section><section id="data"><h2>实验数据</h2><div class="table-wrap"><table><thead><tr><th scope="col">模块</th><th scope="col">使用次数 / 万次</th></tr></thead><tbody><tr><td>首页</td><td>1200</td></tr><tr><td>搜索</td><td>900</td></tr><tr><td>消息</td><td>700</td></tr><tr><td>视频</td><td>500</td></tr><tr><td>商城</td><td>400</td></tr><tr><td>我的</td><td>300</td></tr></tbody></table></div></section><section id="method"><h2>实现要点</h2><ol><li>radius: [33%, 66%] 指定内半径和外半径，在中心留出空白。</li><li>六个功能模块共使用 4000 万次，首页占 30%。</li></ol></section><section id="results"><h2>运行结果</h2><figure><a href="figure-1.png" target="_blank" rel="noopener"><img src="figure-1.png" alt="各功能模块月使用次数占比" loading="lazy"></a><figcaption>图 1　各功能模块月使用次数占比 <a href="figure-1.png" download>下载截图 ↓</a></figcaption></figure></section><section id="code"><div class="section-heading"><h2>完整配置</h2><button class="copy" type="button">复制代码</button></div><pre tabindex="0"><code>var option = {
+    title: {
+        text: &#39;某App各功能模块月使用次数占比&#39;,
+        subtext: &#39;单位：万次&#39;,
+        left: &#39;center&#39;,
+        top: 30
+    },
+    tooltip: {
+        trigger: &#39;item&#39;,
+        formatter: &#39;{b}：{c} 万次（{d}%）&#39;
+    },
+    legend: {
+        bottom: 30,
+        data: [&#39;首页&#39;, &#39;搜索&#39;, &#39;消息&#39;, &#39;视频&#39;, &#39;商城&#39;, &#39;我的&#39;]
+    },
+    series: [{
+        name: &#39;月使用次数&#39;,
+        type: &#39;pie&#39;,
+        radius: [&#39;33%&#39;, &#39;66%&#39;],
+        center: [&#39;50%&#39;, &#39;50%&#39;],
+        label: {
+            show: true,
+            position: &#39;outside&#39;,
+            formatter: &#39;{b}\n{d}%&#39;,
+            fontSize: 16
+        },
+        labelLine: { show: true, length: 20, length2: 25 },
+        data: [
+            { value: 1200, name: &#39;首页&#39; },
+            { value: 900, name: &#39;搜索&#39; },
+            { value: 700, name: &#39;消息&#39; },
+            { value: 500, name: &#39;视频&#39; },
+            { value: 400, name: &#39;商城&#39; },
+            { value: 300, name: &#39;我的&#39; }
+        ]
+    }]
+};
+myChart.setOption(option);</code></pre><p class="copy-status" role="status"></p></section></div></div></main><footer>个人作品集 · 实验记录 <a href="#top">回到顶部 ↑</a></footer><script src="../library.js"></script></body></html>

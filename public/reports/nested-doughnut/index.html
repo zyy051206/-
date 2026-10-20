@@ -1,0 +1,60 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="课程实验报告、完整配置与运行截图"><title>嵌套环形图 · 个人作品集</title><link rel="stylesheet" href="../style.css"></head><body><header><a class="brand" href="../index.html">作品集 <span>/ 实验报告</span></a><nav><a href="../index.html">全部报告</a></nav></header><main id="top" class="detail"><div class="report-heading"><p class="eyebrow">数据可视化 / 实验六 · 第 13 题</p><h1>嵌套环形图</h1><p class="lead">将一级品类与二级子类放在同心的两个系列中。</p><div class="actions"><a class="button primary" href="demo.html" target="_blank" rel="noopener">运行实验 ↗</a><a class="button" href="#code">查看完整配置 ↓</a></div></div><div class="reading"><aside aria-label="报告目录"><a href="#objective">实验目的</a><a href="#data">实验数据</a><a href="#method">实现要点</a><a href="#results">运行结果</a><a href="#code">完整配置</a></aside><div class="article"><section id="objective"><h2>实验目的</h2><p>理解多层级占比展示，并保证父子数据金额一致。</p></section><section id="data"><h2>实验数据</h2><div class="table-wrap"><table><thead><tr><th scope="col">一级品类</th><th scope="col">合计 / 万元</th><th scope="col">二级子类 / 万元</th></tr></thead><tbody><tr><td>服装</td><td>320</td><td>男装 120，女装 200</td></tr><tr><td>数码</td><td>450</td><td>手机 250，电脑 200</td></tr><tr><td>食品</td><td>180</td><td>零食 100，生鲜 80</td></tr><tr><td>图书</td><td>90</td><td>教材 50，文学 40</td></tr><tr><td>家居</td><td>260</td><td>家具 150，家纺 110</td></tr></tbody></table></div></section><section id="method"><h2>实现要点</h2><ol><li>内层半径为 35%，以 10 号字在内部显示一级品类名称。</li><li>外层半径为 [45%, 70%]，外部标签以 10 号字分行显示子类名称和占总额百分比。</li><li>内外层总额均为 1300 万元，子类按父类顺序排列，使角度边界对应。</li></ol></section><section id="results"><h2>运行结果</h2><figure><a href="figure-1.png" target="_blank" rel="noopener"><img src="figure-1.png" alt="一级品类与二级子类销售额占比" loading="lazy"></a><figcaption>图 1　一级品类与二级子类销售额占比 <a href="figure-1.png" download>下载截图 ↓</a></figcaption></figure></section><section id="code"><div class="section-heading"><h2>完整配置</h2><button class="copy" type="button">复制代码</button></div><pre tabindex="0"><code>var option = {
+    title: {
+        text: &#39;某电商平台一级品类与二级子类销售额占比&#39;,
+        subtext: &#39;单位：万元&#39;,
+        left: &#39;center&#39;,
+        top: 20
+    },
+    tooltip: {
+        trigger: &#39;item&#39;,
+        formatter: &#39;{a}&lt;br/&gt;{b}：{c} 万元（{d}%）&#39;
+    },
+    series: [
+        {
+            name: &#39;一级品类&#39;,
+            type: &#39;pie&#39;,
+            radius: &#39;35%&#39;,
+            center: [&#39;50%&#39;, &#39;55%&#39;],
+            label: {
+                show: true,
+                position: &#39;inside&#39;,
+                fontSize: 10,
+                formatter: &#39;{b}&#39;
+            },
+            labelLine: { show: false },
+            data: [
+                { value: 320, name: &#39;服装&#39;, itemStyle: { color: &#39;#5470c6&#39; } },
+                { value: 450, name: &#39;数码&#39;, itemStyle: { color: &#39;#91cc75&#39; } },
+                { value: 180, name: &#39;食品&#39;, itemStyle: { color: &#39;#fac858&#39; } },
+                { value: 90, name: &#39;图书&#39;, itemStyle: { color: &#39;#ee6666&#39; } },
+                { value: 260, name: &#39;家居&#39;, itemStyle: { color: &#39;#73c0de&#39; } }
+            ]
+        },
+        {
+            name: &#39;二级子类&#39;,
+            type: &#39;pie&#39;,
+            radius: [&#39;45%&#39;, &#39;70%&#39;],
+            center: [&#39;50%&#39;, &#39;55%&#39;],
+            label: {
+                show: true,
+                position: &#39;outside&#39;,
+                fontSize: 10,
+                formatter: &#39;{b}\n{d}%&#39;
+            },
+            labelLine: { show: true, length: 15, length2: 20 },
+            data: [
+                { value: 120, name: &#39;男装&#39;, itemStyle: { color: &#39;#5470c6&#39; } },
+                { value: 200, name: &#39;女装&#39;, itemStyle: { color: &#39;#8ca0dc&#39; } },
+                { value: 250, name: &#39;手机&#39;, itemStyle: { color: &#39;#91cc75&#39; } },
+                { value: 200, name: &#39;电脑&#39;, itemStyle: { color: &#39;#b4de9f&#39; } },
+                { value: 100, name: &#39;零食&#39;, itemStyle: { color: &#39;#fac858&#39; } },
+                { value: 80, name: &#39;生鲜&#39;, itemStyle: { color: &#39;#fcde99&#39; } },
+                { value: 50, name: &#39;教材&#39;, itemStyle: { color: &#39;#ee6666&#39; } },
+                { value: 40, name: &#39;文学&#39;, itemStyle: { color: &#39;#f4a0a0&#39; } },
+                { value: 150, name: &#39;家具&#39;, itemStyle: { color: &#39;#73c0de&#39; } },
+                { value: 110, name: &#39;家纺&#39;, itemStyle: { color: &#39;#a8d8eb&#39; } }
+            ]
+        }
+    ]
+};
+myChart.setOption(option);</code></pre><p class="copy-status" role="status"></p></section></div></div></main><footer>个人作品集 · 实验记录 <a href="#top">回到顶部 ↑</a></footer><script src="../library.js"></script></body></html>

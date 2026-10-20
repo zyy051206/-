@@ -79,3 +79,12 @@ body.dialog-open{overflow:hidden}
 @media(max-width:400px){.home-main{padding-top:52px;padding-bottom:30px}h1{font-size:54px}.signature{font-size:13px}.navigation{gap:22px 22px}.collection-note{font-size:9px;letter-spacing:.04em}.collection-note span{margin:0 7px}.panel{padding:34px 25px}.panel h2{font-size:24px}.credits-shell{padding:28px 24px;margin:24px auto}.credits-shell h1{font-size:26px}}
 @media(max-height:700px) and (min-width:721px){.home-main{padding:40px 24px 25px}.eyebrow{margin-bottom:16px}h1{font-size:62px;margin-bottom:14px}.navigation{margin-top:28px}.collection-note{margin-top:24px}.home-footer{padding:16px 20px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.mountains{will-change:auto}}
+
+.about-links{display:flex;flex-wrap:wrap;align-items:center;gap:6px 24px;margin-top:26px}
+.about-links .panel-link{margin-top:0}
+
+.collection-note+.collection-note{margin-left:20px;padding-left:20px;border-left:1px solid rgba(255,255,255,.28)}
+@media(max-width:720px){.collection-note+.collection-note{margin-left:14px;padding-left:14px}}
+@media(max-width:400px){.collection-note+.collection-note{margin-left:10px;padding-left:10px}}
+.collection-note+.collection-note{color:#fff;font-weight:600}
+.collection-note+.collection-note:hover{color:#fff;border-left-color:rgba(255,255,255,.65)}

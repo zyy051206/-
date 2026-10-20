@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="使用内联 SVG 和 JavaScript 绘制的鹈鹕骑自行车二维动画。">
+<title>鹈鹕骑单车 · SVG 2D 动画</title>
+<style>
+*{box-sizing:border-box}
+:root{font-family:"Segoe UI","Microsoft YaHei",sans-serif;color:#223f49;background:#eef7f8}
+body{margin:0;min-height:100vh;padding:32px 20px;display:grid;place-items:center}
+main{width:min(900px,100%)}
+header{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:20px}
+.eyebrow{font-size:12px;letter-spacing:3px;font-weight:700;color:#d35b32;margin:0 0 8px}
+h1{font-size:clamp(25px,4vw,36px);margin:0;letter-spacing:-1px}
+.hint{font-size:14px;color:#607b83;line-height:1.7;margin:0}
+.stage{border:1px solid #c5e0e4;border-radius:26px;overflow:hidden;background:#c8edf5;box-shadow:0 18px 60px #30556510}
+svg{display:block;width:100%;height:auto;max-height:65vh}
+.controls{display:flex;align-items:center;gap:24px;padding:20px 24px;background:#fff;flex-wrap:wrap}
+button{font:inherit;font-size:15px;font-weight:600;border:0;border-radius:11px;padding:13px 24px;background:#ed6b42;color:#fff;cursor:pointer;min-width:115px}
+button:hover{background:#d65b35}
+label{flex:1;min-width:180px;font-size:14px;display:flex;gap:14px;align-items:center}
+input{flex:1;min-width:60px;accent-color:#ed6b42;cursor:pointer}
+output{font-variant-numeric:tabular-nums;min-width:40px}
+#status{font-size:14px;color:#52767d}
+button:focus-visible,input:focus-visible{outline:3px solid #287fa2;outline-offset:4px}
+footer{padding:16px 2px;color:#607b83;font-size:13px;line-height:1.7}
+@media(max-width:560px){body{padding:22px 12px}header{display:block}.hint{margin-top:10px}.controls{gap:18px;padding:18px}label{order:3;flex-basis:100%}#status{margin-left:auto}svg{max-height:none}}
+</style>
+</head>
+<body>
+<main>
+<header><div><p class="eyebrow">PELICAN ON WHEELS</p><h1>鹈鹕的单车时光</h1></div><p class="hint">踩上单车，慢慢兜风。</p></header>
+<section class="stage" aria-label="鹈鹕骑行互动动画">
+<svg xmlns="http://www.w3.org/2000/svg" id="scene" viewBox="0 0 1000 800" role="img" aria-labelledby="title desc">
+  <title id="title">鹈鹕骑自行车的二维动画</title>
+  <desc id="desc">白色鹈鹕戴着蓝色骑行帽，双脚交替踩踏橘红色自行车，车轮转动，路面向后移动。</desc>
+  <defs>
+    <linearGradient id="sky" x2="0%" y2="100%"><stop stop-color="#daf5fc"/><stop offset="1" stop-color="#b8e5ed"/></linearGradient>
+    <linearGradient id="beak" x2="0%" y2="100%"><stop stop-color="#ffd66b"/><stop offset="1" stop-color="#f5a536"/></linearGradient>
+    <linearGradient id="feather" x2="100%" y2="100%"><stop stop-color="#fffef8"/><stop offset="1" stop-color="#e3e9e5"/></linearGradient>
+    <g id="wheel">
+      <circle r="133" fill="#def2f0" stroke="#263e45" stroke-width="15"/>
+      <circle r="121" fill="none" stroke="#faf1d6" stroke-width="7"/>
+      <g stroke="#83a7ad" stroke-width="2.5">
+        <path d="M-119 0H119M0-119V119M-84-84L84 84M-84 84L84-84M-110-46L110 46M-110 46L110-46M-46-110L46 110M-46 110L46-110"/>
+      </g>
+      <circle cx="0" cy="-122" r="5" fill="#f27949"/>
+      <circle r="12" fill="#faf1d6" stroke="#263e45" stroke-width="5"/>
+    </g>
+  </defs>
+  <rect id="scene" rx="40" fill="url(#sky)"/>
+  <circle cx="831" cy="137" r="50" fill="#fff6cd"/>
+  <g fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" opacity=".75">
+    <path d="M106 184h94m-62 23h95M756 296h92m-51 23h76"/>
+  </g>
+  <ellipse cx="503" cy="721" rx="352" ry="17" fill="#75b0b7" opacity=".22"/>
+  <path d="M87 722H907" stroke="#7db4bb" stroke-width="3" stroke-linecap="round"/>
+  <path id="road" d="M-180 749H1180" fill="none" stroke="#7db4bb" stroke-width="4" stroke-dasharray="58 102" stroke-linecap="round"/>
+  <!-- 车轮使用外层定位、内层旋转，旋转中心为局部坐标原点。 -->
+  <g transform="translate(281 579)"><g id="rear-wheel"><use href="#wheel"/></g></g>
+  <g transform="translate(729 579)"><g id="front-wheel"><use href="#wheel"/></g></g>
+<g id="far-leg">
+    <path id="far-limb" fill="none" stroke="#e6a83d" stroke-width="21" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="far-crank" fill="none" stroke="#48646b" stroke-width="9" stroke-linecap="round"/>
+    <g id="far-foot">
+      <path d="M-21 0H24" stroke="#263e45" stroke-width="11" stroke-linecap="round"/>
+      <path d="M-25-19Q-18-10-10-13L27-6Q38 0 25 1H-20Q-33 0-25-19Z" fill="#e6a83d" stroke="#cc9131" stroke-width="3"/>
+      <path d="M-6-8L17-3" stroke="#cc9131" stroke-width="2" stroke-linecap="round"/>
+    </g>
+  </g>
+  <!-- Frame, fork, mudguards and saddle -->
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M159 532q53-133 175-80M641 456q114-46 187 62" stroke="#dc5537" stroke-width="12"/>
+    <path d="M281 579l124-143 100 169H281l104-180M405 436l248-3-148 172M647 407l82 172" stroke="#b64532" stroke-width="17"/>
+    <path d="M281 575l124-143 100 169H281M405 432l248-3-148 172M647 403l82 172" stroke="#fb7046" stroke-width="10"/>
+    <path d="M405 433l-20-52M647 404l-23-68q-7-28 18-33l35-6" stroke="#55757b" stroke-width="10"/>
+    <path d="M644 304l34-7" stroke="#283f43" stroke-width="14"/>
+    <path d="M668 311q45 40 15 109" stroke="#3e5960" stroke-width="3"/>
+  </g>
+  <path d="M345 376q25-16 77-5 13 3 8 13-3 8-34 7l-46-3q-19-2-5-12" fill="#734b39" stroke="#493c34" stroke-width="4"/>
+  <path d="M281 589l216 33q35 4 36-22 1-24-27-25l-225-7" fill="none" stroke="#547079" stroke-width="4"/>
+  <circle cx="505" cy="605" r="32" fill="#d5dfd8" stroke="#435f67" stroke-width="6"/>
+  <circle cx="505" cy="605" r="20" fill="#65808a"/>
+  <!-- Sweeping tail, body and long pelican neck -->
+  <path d="M382 281q-57 35-130 53l59 20-73 2q59 42 135 45" fill="#edf1e9" stroke="#c2d1cc" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M337 305q48-46 119-49 47-16 33-75-11-51 19-83 31-31 75-8 30 16 28 51-2 31-30 52-27 21-17 52 17 45 10 81-5 55-69 76-89 26-164-13-50-27-4-84Z" fill="url(#feather)" stroke="#c4d4d0" stroke-width="4" stroke-linejoin="round"/>
+  <!-- Golden throat pouch and long beak -->
+  <path d="M576 155l264 34q-44 94-132 99-83 1-132-133Z" fill="url(#beak)" stroke="#d99731" stroke-width="4"/>
+  <path d="M576 145q51-7 111 8l164 37q15 4 11 11l-286-33q-16-5 0-23Z" fill="#ffda70" stroke="#d99a34" stroke-width="4"/>
+  <path d="M608 183q37 71 94 83" fill="none" stroke="#ffe2a0" stroke-width="6" stroke-linecap="round"/>
+  <!-- Eye and cycling cap -->
+  <ellipse cx="563" cy="128" rx="17" ry="21" fill="white"/>
+  <ellipse cx="568" cy="130" rx="9" ry="13" fill="#253f48"/>
+  <circle cx="571" cy="125" r="3.5" fill="white"/>
+  <path d="M545 99q13-7 25-1" fill="none" stroke="#385661" stroke-width="4" stroke-linecap="round"/>
+  <path d="M493 109q-4-53 42-66 42-10 64 30l-106 36Z" fill="#327bb3" stroke="#235b8b" stroke-width="4"/>
+  <path d="M536 44q24 9 32 38" fill="none" stroke="#f5f6e9" stroke-width="12"/>
+  <path d="M495 108q57-32 110-35 28 0 35 12-76-3-141 32Z" fill="#246296" stroke="#235b8b" stroke-width="4"/>
+<g id="near-leg">
+    <path id="near-limb" fill="none" stroke="#ffc557" stroke-width="21" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="near-crank" fill="none" stroke="#48646b" stroke-width="9" stroke-linecap="round"/>
+    <g id="near-foot">
+      <path d="M-21 0H24" stroke="#263e45" stroke-width="11" stroke-linecap="round"/>
+      <path d="M-25-19Q-18-10-10-13L27-6Q38 0 25 1H-20Q-33 0-25-19Z" fill="#ffc557" stroke="#cc9131" stroke-width="3"/>
+      <path d="M-6-8L17-3" stroke="#cc9131" stroke-width="2" stroke-linecap="round"/>
+    </g>
+  </g>
+  <circle cx="505" cy="605" r="8" fill="#e1e9e0"/>
+  <!-- Wing extends forward to hold the handlebar -->
+  <path d="M363 298q62-45 136-15 48 21 102 27 21 2 33 15 9 14-4 17-8 0-18-11 9 16-2 18-9 0-18-13 6 17-5 17-7-1-17-17-56 12-99 4-38 28-81 10-26-10-27-52Z" fill="#fffdf4" stroke="#c4d4d0" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="none" stroke="#d8e1d8" stroke-width="4" stroke-linecap="round">
+    <path d="M383 302q48 37 94 17M380 317q39 36 75 22M350 354q19 19 43 19"/>
+  </g>
+  <!-- A little breeze -->
+  <g fill="none" stroke="#6aa9b6" stroke-width="4" stroke-linecap="round" opacity=".6"><path d="M130 389h76m-56 20h38M93 438h103"/></g>
+</svg>
+
+<div class="controls">
+<button id="toggle" type="button">开始骑行</button>
+<label for="speed">骑行速度<input id="speed" type="range" min="0.3" max="2.5" step="0.1" value="1"><output id="speed-value" for="speed">1.0×</output></label>
+<span id="status" role="status">休息一下</span>
+</div>
+</section>
+<footer>空格键暂停 / 继续 · 拖动滑块调整节奏</footer>
+<noscript>请启用 JavaScript，以显示完整的踩踏动画和交互。</noscript>
+</main>
+<script>
+const $ = id => document.getElementById(id);
+const motionPreference = matchMedia('(prefers-reduced-motion: reduce)');
+let playing = !motionPreference.matches;
+let speed = 1;
+let phase = 0;
+let lastTime = null;
+let frameId = null;
+// 135 是车轮外缘的近似半径，2.2 是用于表现骑行节奏的传动比。
+const wheelRadius = 135;
+const gearRatio = 2.2;
+const crank = { x: 505, y: 605, radius: 42 };
+const limbs = ['far', 'near'].map(side => ({
+  path: $(side + '-limb'), crank: $(side + '-crank'), foot: $(side + '-foot')
+}));
+
+// 两段等长腿的几何解：髋关节与脚踝之间的中点，沿垂线偏移得到膝盖。
+function updateLeg(index, angle) {
+  const pedalX = crank.x + Math.cos(angle) * crank.radius;
+  const pedalY = crank.y + Math.sin(angle) * crank.radius;
+  const hipX = index === 0 ? 466 : 481;
+  const hipY = 390;
+  const ankleX = pedalX - 21;
+  const ankleY = pedalY - 13;
+  const dx = ankleX - hipX;
+  const dy = ankleY - hipY;
+  const distance = Math.max(0.001, Math.hypot(dx, dy));
+  const segmentLength = 140;
+  const bend = Math.sqrt(Math.max(0, segmentLength ** 2 - (distance / 2) ** 2));
+  const kneeX = (hipX + ankleX) / 2 + dy / distance * bend;
+  const kneeY = (hipY + ankleY) / 2 - dx / distance * bend;
+  const limb = limbs[index];
+  limb.path.setAttribute('d', `M${hipX} ${hipY}L${kneeX} ${kneeY}L${ankleX} ${ankleY}`);
+  limb.crank.setAttribute('d', `M${crank.x} ${crank.y}L${pedalX} ${pedalY}`);
+  // 脚与踏板只平移，避免随曲柄倒转。
+  limb.foot.setAttribute('transform', `translate(${pedalX} ${pedalY})`);
+}
+
+function draw() {
+  const wheelAngle = phase * gearRatio;
+  const degrees = wheelAngle * 180 / Math.PI;
+  $('rear-wheel').setAttribute('transform', `rotate(${degrees})`);
+  $('front-wheel').setAttribute('transform', `rotate(${degrees})`);
+  updateLeg(0, phase + Math.PI);
+  updateLeg(1, phase);
+  // 虚线周期为 58 + 102 = 160，使用同一相位驱动路面与车轮。
+  $('road').setAttribute('stroke-dashoffset', (wheelAngle * wheelRadius) % 160);
+}
+
+function animate(time) {
+  if (!playing || document.hidden) { frameId = null; return; }
+  if (lastTime !== null) {
+    const dt = Math.min((time - lastTime) / 1000, 0.05);
+    phase += dt * Math.PI * speed;
+  }
+  lastTime = time;
+  draw();
+  frameId = requestAnimationFrame(animate);
+}
+
+function syncPlayback() {
+  $('toggle').textContent = playing ? '暂停骑行' : '开始骑行';
+  $('status').textContent = playing ? '正在兜风' : '休息一下';
+  if (frameId !== null) cancelAnimationFrame(frameId);
+  frameId = null;
+  lastTime = null;
+  if (playing && !document.hidden) frameId = requestAnimationFrame(animate);
+}
+
+$('toggle').addEventListener('click', () => { playing = !playing; syncPlayback(); });
+$('speed').addEventListener('input', event => {
+  speed = Number(event.target.value);
+  $('speed-value').value = speed.toFixed(1) + '×';
+});
+document.addEventListener('keydown', event => {
+  if (event.code === 'Space' && !event.repeat && !event.target.closest('button,input,a,textarea,select')) {
+    event.preventDefault(); playing = !playing; syncPlayback();
+  }
+});
+document.addEventListener('visibilitychange', syncPlayback);
+motionPreference.addEventListener('change', event => {
+  if (event.matches) { playing = false; syncPlayback(); }
+});
+draw();
+syncPlayback();
+</script>
+</body>
+</html>

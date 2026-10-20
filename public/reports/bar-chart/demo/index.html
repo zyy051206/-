@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实验二：单系列条形图绘制</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 32px;
+      background: #f3f5f9;
+      font-family: "Microsoft YaHei", sans-serif;
+    }
+
+    #main {
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(30, 50, 80, 0.06);
+    }
+  </style>
+  <!-- 1. 引入同一文件夹中的 ECharts 库，无需联网。 -->
+  <script src="echarts.min.js"></script>
+</head>
+<body>
+  <!-- 2. 创建图表容器：按实验要求设置为 800 × 500 像素。 -->
+  <div id="main" style="width: 800px; height: 500px;"></div>
+
+  <script>
+    // 3. 等容器创建完成后，初始化 ECharts 实例。
+    const myChart = echarts.init(document.getElementById('main'));
+
+    // 4. 完整的 option 配置。
+    const option = {
+      title: {
+        text: '各班《数据可视化》课程平均分',
+        subtext: '实验二 · 单系列条形图',
+        left: 'center',
+        top: 24,
+        textStyle: { fontSize: 22, color: '#26344d' },
+        subtextStyle: { fontSize: 13, color: '#758198' }
+      },
+      textStyle: {
+        fontFamily: 'Microsoft YaHei, sans-serif'
+      },
+      // 鼠标悬停时显示对应班级的平均分。
+      tooltip: {
+        trigger: 'axis',
+        axisPointer: { type: 'shadow' },
+        formatter: '{b}<br/>{a}：{c} 分'
+      },
+      // 为标题、轴名称和刻度文字预留空间。
+      grid: {
+        left: 56,
+        right: 52,
+        top: 120,
+        bottom: 68,
+        containLabel: true
+      },
+      // 横轴为数值轴，表示平均分；以 0～100 的范围展示分数。
+      xAxis: {
+        type: 'value',
+        name: '平均分',
+        nameLocation: 'middle',
+        nameGap: 32,
+        min: 0,
+        max: 100,
+        interval: 20,
+        nameTextStyle: { fontSize: 14, color: '#536079' },
+        axisLabel: { color: '#68768c' },
+        splitLine: { lineStyle: { color: '#e8edf4', type: 'dashed' } }
+      },
+      // 纵轴为类别轴；inverse 让一班至五班按从上到下的顺序显示。
+      yAxis: {
+        type: 'category',
+        name: '班级',
+        nameLocation: 'start',
+        nameGap: 16,
+        inverse: true,
+        data: ['一班', '二班', '三班', '四班', '五班'],
+        nameTextStyle: { fontSize: 14, color: '#536079' },
+        axisLabel: { fontSize: 14, color: '#394862' },
+        axisTick: { show: false },
+        axisLine: { lineStyle: { color: '#ccd5e2' } }
+      },
+      // 仅设置一个 bar 系列，分数与 yAxis.data 中的班级一一对应。
+      series: [
+        {
+          name: '平均分',
+          type: 'bar',
+          data: [82, 78, 90, 85, 76],
+          barWidth: 30,
+          itemStyle: {
+            color: '#5470c6',
+            borderRadius: [0, 4, 4, 0]
+          },
+          // 在每根条形末端显示具体平均分。
+          label: {
+            show: true,
+            position: 'right',
+            formatter: '{c}',
+            color: '#394862',
+            fontSize: 14
+          }
+        }
+      ]
+    };
+
+    // 5. 应用配置，绘制横向单系列条形图。
+    myChart.setOption(option);
+  </script>
+</body>
+</html>

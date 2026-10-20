@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>基础饼图实验</title>
+  <style>
+    body { margin: 0; background: white; font-family: "Microsoft YaHei", sans-serif; }
+    #chart { width: 100vw; height: 100vh; min-height: 500px; }
+  </style>
+</head>
+<body>
+<div id="chart"></div>
+<script src="../assets/echarts.min.js"></script>
+<script>
+var myChart = echarts.init(document.getElementById('chart'));
+var option = {
+    title: {
+        text: '各类商品销售额占比',
+        subtext: '单位：万元',
+        left: 'center',
+        top: 30
+    },
+    tooltip: {
+        trigger: 'item',
+        formatter: '{b}：{c} 万元（{d}%）'
+    },
+    legend: {
+        orient: 'horizontal',
+        bottom: 30,
+        data: ['服装', '数码', '食品', '图书', '家居']
+    },
+    series: [{
+        name: '销售额',
+        type: 'pie',
+        radius: '55%',
+        center: ['50%', '50%'],
+        data: [
+            { value: 320, name: '服装' },
+            { value: 450, name: '数码' },
+            { value: 180, name: '食品' },
+            { value: 90, name: '图书' },
+            { value: 260, name: '家居' }
+        ],
+        label: { show: true, formatter: '{b}\n{d}%', fontSize: 16 },
+        labelLine: { show: true },
+        emphasis: {
+            itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+        }
+    }]
+};
+myChart.setOption(option);
+window.addEventListener('resize', function () { myChart.resize(); });
+</script>
+</body>
+</html>
