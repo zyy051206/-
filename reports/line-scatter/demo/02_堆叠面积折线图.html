@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>02_堆叠面积折线图</title>
+  <script src="vendor/echarts.min.js"></script>
+</head>
+<body style="margin:0;background:white">
+  <!-- 容器必须具有明确的宽度和高度 -->
+  <div id="chart" style="width:100%;height:540px"></div>
+  <script>
+const myChart = echarts.init(document.getElementById('chart'));
+const option = {
+  animation: false,
+  title: { text: '2023至2024年产品销售额', left: 'center' },
+  textStyle: { fontFamily: 'Microsoft YaHei', fontSize: 18 },
+  color: ['#218858', '#367bd6', '#d58d22'],
+  tooltip: { trigger: 'axis', valueFormatter: v => v + ' 万元' },
+  legend: { data: ['手机','电脑','配件'], top: 38 }, // 图例
+  grid: { left: 90, right: 65, top: 105, bottom: 65 },
+  xAxis: { type: 'category', boundaryGap: false,
+    data: ['2023 Q1','2023 Q2','2023 Q3','2023 Q4',
+           '2024 Q1','2024 Q2','2024 Q3','2024 Q4'],
+    axisLabel: { fontSize: 16 } },
+  yAxis: { type: 'value', name: '销售额 (万元)', max: 420 },
+  series: [
+    { name: '手机', data: [100,115,130,145,120,135,150,170] },
+    { name: '电脑', data: [70,85,95,110,80,95,110,130] },
+    { name: '配件', data: [40,45,50,60,45,52,60,75] }
+  ].map(product => ({
+    ...product,
+    type: 'line',
+    stack: '总量', // 相同stack值使三个系列叠加
+    areaStyle: {}, // 开启面积填充，展示各产品的贡献
+    symbol: 'circle', symbolSize: 8, // 标记大小为8px
+    lineStyle: { width: 2 },
+    labelLayout: p => ({ // 将两端标签移向图内，避开坐标刻度
+      dx: p.dataIndex === 0 ? 35 : p.dataIndex === 7 ? -25 : 0 }),
+    label: { show: true, position: 'top', fontSize: 16,
+             formatter: '{a} {c}' } // 产品名和本系列原始值
+  }))
+};
+myChart.setOption(option); // 应用配置并绘图
+window.addEventListener('resize', () => myChart.resize());
+  </script>
+</body>
+</html>

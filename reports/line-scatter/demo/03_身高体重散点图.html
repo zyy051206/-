@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>03_身高体重散点图</title>
+  <script src="vendor/echarts.min.js"></script>
+</head>
+<body style="margin:0;background:white">
+  <!-- 容器必须具有明确的宽度和高度 -->
+  <div id="chart" style="width:100%;height:420px"></div>
+  <script>
+const myChart = echarts.init(document.getElementById('chart'));
+const option = {
+  animation: false,
+  title: { text: '学生身高与体重关系', left: 'center' },
+  textStyle: { fontFamily: 'Microsoft YaHei', fontSize: 18 },
+  grid: { left: 85, right: 90, top: 75, bottom: 65 },
+  tooltip: { trigger: 'item', formatter: p =>
+    p.value[0] + ' cm，' + p.value[1] + ' kg' },
+  xAxis: { type: 'value', name: '身高(cm)',
+           nameLocation: 'middle', nameGap: 36,
+           min: 155, max: 190 }, // 连续数值轴
+  yAxis: { type: 'value', name: '体重(kg)', min: 45, max: 85 },
+  series: [{
+    name: '学生', type: 'scatter', symbolSize: 8,
+    itemStyle: { color: '#2674c8' },
+    // 每个二维数组依次为[身高, 体重]，顺序对应A至J
+    data: [[160,50],[165,55],[170,60],[175,68],[180,75],
+           [168,58],[172,65],[178,72],[162,52],[185,80]]
+  }]
+};
+myChart.setOption(option); // 应用配置并绘图
+window.addEventListener('resize', () => myChart.resize());
+  </script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+[
+  {
+    "id": "basic-pie",
+    "title": "基础饼图",
+    "category": "数据可视化"
+  },
+  {
+    "id": "pie-labels",
+    "title": "饼图标签优化",
+    "category": "数据可视化"
+  },
+  {
+    "id": "pie-size",
+    "title": "饼图的尺寸",
+    "category": "数据可视化"
+  },
+  {
+    "id": "pie-layout",
+    "title": "饼图的绘制空间",
+    "category": "数据可视化"
+  },
+  {
+    "id": "doughnut",
+    "title": "环形图的绘制",
+    "category": "数据可视化"
+  },
+  {
+    "id": "nested-doughnut",
+    "title": "嵌套环形图",
+    "category": "数据可视化"
+  },
+  {
+    "id": "hybrid-sort",
+    "title": "归并与插入混合排序",
+    "category": "算法实验"
+  },
+  {
+    "id": "usercf",
+    "title": "UserCF 协同过滤推荐",
+    "category": "推荐算法"
+  },
+  {
+    "id": "sorting-comparison",
+    "title": "四种排序算法性能比较",
+    "category": "算法实验"
+  },
+  {
+    "id": "bar-chart",
+    "title": "单系列条形图",
+    "category": "数据可视化"
+  },
+  {
+    "id": "line-scatter",
+    "title": "折线图与散点图",
+    "category": "数据可视化"
+  }
+]

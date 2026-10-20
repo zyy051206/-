@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实验五 环形图的绘制</title>
+  <style>
+    body { margin: 0; background: white; font-family: "Microsoft YaHei", sans-serif; }
+    #chart { width: 100vw; height: 100vh; min-height: 500px; }
+  </style>
+</head>
+<body>
+<div id="chart"></div>
+<script src="../assets/echarts.min.js"></script>
+<script>
+var myChart = echarts.init(document.getElementById('chart'));
+var option = {
+    title: {
+        text: '某App各功能模块月使用次数占比',
+        subtext: '单位：万次',
+        left: 'center',
+        top: 30
+    },
+    tooltip: {
+        trigger: 'item',
+        formatter: '{b}：{c} 万次（{d}%）'
+    },
+    legend: {
+        bottom: 30,
+        data: ['首页', '搜索', '消息', '视频', '商城', '我的']
+    },
+    series: [{
+        name: '月使用次数',
+        type: 'pie',
+        radius: ['33%', '66%'],
+        center: ['50%', '50%'],
+        label: {
+            show: true,
+            position: 'outside',
+            formatter: '{b}\n{d}%',
+            fontSize: 16
+        },
+        labelLine: { show: true, length: 20, length2: 25 },
+        data: [
+            { value: 1200, name: '首页' },
+            { value: 900, name: '搜索' },
+            { value: 700, name: '消息' },
+            { value: 500, name: '视频' },
+            { value: 400, name: '商城' },
+            { value: 300, name: '我的' }
+        ]
+    }]
+};
+myChart.setOption(option);
+window.addEventListener('resize', function () { myChart.resize(); });
+</script>
+</body>
+</html>

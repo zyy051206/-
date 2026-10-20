@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实验六 嵌套环形图</title>
+  <style>
+    body { margin: 0; background: white; font-family: "Microsoft YaHei", sans-serif; }
+    #chart { width: 100vw; height: 100vh; min-height: 500px; }
+  </style>
+</head>
+<body>
+<div id="chart"></div>
+<script src="../assets/echarts.min.js"></script>
+<script>
+var myChart = echarts.init(document.getElementById('chart'));
+var option = {
+    title: {
+        text: '某电商平台一级品类与二级子类销售额占比',
+        subtext: '单位：万元',
+        left: 'center',
+        top: 20
+    },
+    tooltip: {
+        trigger: 'item',
+        formatter: '{a}<br/>{b}：{c} 万元（{d}%）'
+    },
+    series: [
+        {
+            name: '一级品类',
+            type: 'pie',
+            radius: '35%',
+            center: ['50%', '55%'],
+            label: {
+                show: true,
+                position: 'inside',
+                fontSize: 10,
+                formatter: '{b}'
+            },
+            labelLine: { show: false },
+            data: [
+                { value: 320, name: '服装', itemStyle: { color: '#5470c6' } },
+                { value: 450, name: '数码', itemStyle: { color: '#91cc75' } },
+                { value: 180, name: '食品', itemStyle: { color: '#fac858' } },
+                { value: 90, name: '图书', itemStyle: { color: '#ee6666' } },
+                { value: 260, name: '家居', itemStyle: { color: '#73c0de' } }
+            ]
+        },
+        {
+            name: '二级子类',
+            type: 'pie',
+            radius: ['45%', '70%'],
+            center: ['50%', '55%'],
+            label: {
+                show: true,
+                position: 'outside',
+                fontSize: 10,
+                formatter: '{b}\n{d}%'
+            },
+            labelLine: { show: true, length: 15, length2: 20 },
+            data: [
+                { value: 120, name: '男装', itemStyle: { color: '#5470c6' } },
+                { value: 200, name: '女装', itemStyle: { color: '#8ca0dc' } },
+                { value: 250, name: '手机', itemStyle: { color: '#91cc75' } },
+                { value: 200, name: '电脑', itemStyle: { color: '#b4de9f' } },
+                { value: 100, name: '零食', itemStyle: { color: '#fac858' } },
+                { value: 80, name: '生鲜', itemStyle: { color: '#fcde99' } },
+                { value: 50, name: '教材', itemStyle: { color: '#ee6666' } },
+                { value: 40, name: '文学', itemStyle: { color: '#f4a0a0' } },
+                { value: 150, name: '家具', itemStyle: { color: '#73c0de' } },
+                { value: 110, name: '家纺', itemStyle: { color: '#a8d8eb' } }
+            ]
+        }
+    ]
+};
+myChart.setOption(option);
+window.addEventListener('resize', function () { myChart.resize(); });
+</script>
+</body>
+</html>

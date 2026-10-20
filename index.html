@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="张远洋的个人主页。记录课程实验、算法学习与数据可视化作品。">
+  <meta name="theme-color" content="#348cb2">
+  <title>张远洋 · 个人主页</title>
+  <link rel="stylesheet" href="assets/home.css">
+  <script src="assets/home.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#navigation">跳转到导航</a>
+  <div class="landscape" aria-hidden="true"><div class="mountains"></div><div class="landscape-shade"></div><div class="landscape-texture"></div></div>
+  <svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="icon-book" viewBox="0 0 24 24"><path d="M12 5.5C9.6 3.8 6.5 3.3 3 4v15c3.5-.7 6.6-.2 9 1.5 2.4-1.7 5.5-2.2 9-1.5V4c-3.5-.7-6.6-.2-9 1.5Z"/><path d="M12 5.5v15M6 8l3 .6M6 12l3 .6M15 8.6l3-.6M15 12.6l3-.6"/></symbol>
+    <symbol id="icon-chart" viewBox="0 0 24 24"><path d="M12 3v9h9a9 9 0 1 1-9-9Z"/><path d="M16 3.5a8 8 0 0 1 4.5 4.5H16Z"/></symbol>
+    <symbol id="icon-code" viewBox="0 0 24 24"><path d="m7.5 6-6 6 6 6M16.5 6l6 6-6 6M14 3l-4 18"/></symbol>
+    <symbol id="icon-projects" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol>
+    <symbol id="icon-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+    <symbol id="icon-user" viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="4"/><path d="M4 21v-2a8 8 0 0 1 16 0v2"/></symbol>
+    <symbol id="icon-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></symbol>
+    <symbol id="icon-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+  </svg>
+  <div class="home-shell">
+    <main class="home-main">
+      <header class="identity">
+        <p class="eyebrow">YUANYANG / PERSONAL SPACE</p>
+        <h1>张远洋</h1>
+        <p class="signature"><span aria-hidden="true">·</span> 在学习中探索，在代码中生长 <span aria-hidden="true">·</span></p>
+        <nav id="navigation" class="navigation" aria-label="主页导航">
+          <a class="nav-item" href="reports/index.html"><span class="icon-circle"><svg aria-hidden="true"><use href="#icon-book"/></svg></span><span>实验报告</span></a>
+          <a class="nav-item" href="reports/index.html?category=数据可视化"><span class="icon-circle"><svg aria-hidden="true"><use href="#icon-chart"/></svg></span><span>图表演示</span></a>
+          <a class="nav-item" href="reports/index.html?category=算法实验"><span class="icon-circle"><svg aria-hidden="true"><use href="#icon-code"/></svg></span><span>算法实验</span></a>
+          <button class="nav-item" type="button" data-dialog="projects-dialog" aria-haspopup="dialog"><span class="icon-circle"><svg aria-hidden="true"><use href="#icon-projects"/></svg></span><span>作品</span></button>
+          <a class="nav-item" href="mailto:1908323717@qq.com" title="发送邮件至 1908323717@qq.com"><span class="icon-circle"><svg aria-hidden="true"><use href="#icon-mail"/></svg></span><span>QQ 邮箱</span></a>
+          <button class="nav-item" type="button" data-dialog="about-dialog" aria-haspopup="dialog"><span class="icon-circle"><svg aria-hidden="true"><use href="#icon-user"/></svg></span><span>关于我</span></button>
+        </nav>
+        <a class="collection-note" href="reports/index.html">11 份实验记录 <span aria-hidden="true">/</span> 每一次尝试，都值得留下</a>
+      </header>
+    </main>
+    <footer class="home-footer"><p>© 2026 张远洋 <span class="footer-divider" aria-hidden="true">·</span> <a href="credits.html">Nange / Aerial · 设计与致谢</a></p></footer>
+  </div>
+  <dialog id="projects-dialog" class="panel" aria-labelledby="projects-title">
+    <button class="close-dialog" type="button" data-close aria-label="关闭作品窗口"><svg aria-hidden="true"><use href="#icon-close"/></svg></button>
+    <p class="panel-kicker">SMALL EXPERIMENTS</p>
+    <h2 id="projects-title">一些小作品</h2>
+    <p class="panel-intro">让想法在屏幕上发生。</p>
+    <div class="project-links">
+      <a href="projects/reaction-test/index.html"><span class="project-number">01</span><span><strong>反应速度测试</strong><small>试试你的反应有多快</small></span><svg aria-hidden="true"><use href="#icon-arrow"/></svg></a>
+      <a href="projects/pelican/index.html"><span class="project-number">02</span><span><strong>鹈鹕互动作品</strong><small>打开，探索这个小实验</small></span><svg aria-hidden="true"><use href="#icon-arrow"/></svg></a>
+    </div>
+    <a class="panel-link" href="reports/index.html">浏览全部实验报告 <span aria-hidden="true">↗</span></a>
+  </dialog>
+  <dialog id="about-dialog" class="panel" aria-labelledby="about-title">
+    <button class="close-dialog" type="button" data-close aria-label="关闭关于我窗口"><svg aria-hidden="true"><use href="#icon-close"/></svg></button>
+    <p class="panel-kicker">HELLO, WORLD.</p>
+    <h2 id="about-title">你好，我是张远洋。</h2>
+    <p class="about-text">这里是我的学习与作品记录。从一张图表到一段算法，把思考、实现和实验结果慢慢整理在一起。</p>
+    <p class="about-text">目前收录 11 份实验记录，涵盖数据可视化、排序算法与协同过滤推荐。报告中保留了实验数据、实现代码和运行结果。</p>
+    <div class="about-tags" aria-label="学习方向"><span>数据可视化</span><span>算法实验</span><span>推荐算法</span></div>
+    <a class="panel-link" href="reports/index.html">从实验报告开始了解 <span aria-hidden="true">↗</span></a>
+  </dialog>
+  <noscript><div class="noscript-links">作品：<a href="projects/reaction-test/index.html">反应速度测试</a> · <a href="projects/pelican/index.html">鹈鹕互动作品</a></div></noscript>
+</body>
+</html>

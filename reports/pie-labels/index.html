@@ -1,0 +1,61 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="课程实验报告、完整配置与运行截图"><title>饼图标签优化 · 个人作品集</title><link rel="stylesheet" href="../style.css"></head><body><header><a class="brand" href="../index.html">作品集 <span>/ 实验报告</span></a><nav><a href="../index.html">全部报告</a></nav></header><main id="top" class="detail"><div class="report-heading"><p class="eyebrow">数据可视化 / 实验二 · 第 9 题</p><h1>饼图标签优化</h1><p class="lead">比较内部标签、外部文字对齐和引导线末端对齐。</p><div class="actions"><a class="button primary" href="demo.html" target="_blank" rel="noopener">运行实验 ↗</a><a class="button" href="#code">查看完整配置 ↓</a></div></div><div class="reading"><aside aria-label="报告目录"><a href="#objective">实验目的</a><a href="#data">实验数据</a><a href="#method">实现要点</a><a href="#results">运行结果</a><a href="#code">完整配置</a></aside><div class="article"><section id="objective"><h2>实验目的</h2><p>掌握 formatter、position 和 alignTo 对标签的控制。</p></section><section id="data"><h2>实验数据</h2><div class="table-wrap"><table><thead><tr><th scope="col">类别</th><th scope="col">金额 / 万元</th></tr></thead><tbody><tr><td>研发</td><td>500</td></tr><tr><td>市场</td><td>350</td></tr><tr><td>人力</td><td>280</td></tr><tr><td>运营</td><td>200</td></tr><tr><td>其他</td><td>120</td></tr></tbody></table></div></section><section id="method"><h2>实现要点</h2><ol><li>标签格式为“项目(金额万元)”，例如研发(500万元)。</li><li>三种效果分别使用 inside、outside + edge、outside + labelLine。</li></ol></section><section id="results"><h2>运行结果</h2><figure><a href="figure-1.png" target="_blank" rel="noopener"><img src="figure-1.png" alt="标签显示在扇形内部" loading="lazy"></a><figcaption>图 1　标签显示在扇形内部 <a href="figure-1.png" download>下载截图 ↓</a> <a href="demo.html?mode=inside" target="_blank" rel="noopener">运行此效果 ↗</a></figcaption></figure><figure><a href="figure-2.png" target="_blank" rel="noopener"><img src="figure-2.png" alt="外部标签文字对齐" loading="lazy"></a><figcaption>图 2　外部标签文字对齐 <a href="figure-2.png" download>下载截图 ↓</a> <a href="demo.html?mode=edge" target="_blank" rel="noopener">运行此效果 ↗</a></figcaption></figure><figure><a href="figure-3.png" target="_blank" rel="noopener"><img src="figure-3.png" alt="引导线末端对齐" loading="lazy"></a><figcaption>图 3　引导线末端对齐 <a href="figure-3.png" download>下载截图 ↓</a> <a href="demo.html?mode=labelLine" target="_blank" rel="noopener">运行此效果 ↗</a></figcaption></figure></section><section id="code"><div class="section-heading"><h2>完整配置</h2><button class="copy" type="button">复制代码</button></div><p>mode 支持 inside、edge、labelLine，可通过运行结果下的入口分别查看。</p><pre tabindex="0"><code>var mode = new URLSearchParams(location.search).get(&#39;mode&#39;) || &#39;inside&#39;;
+var modes = {
+    inside: { name: &#39;标签显示在扇形内部&#39;, position: &#39;inside&#39;, alignTo: &#39;none&#39; },
+    edge: { name: &#39;外部标签文字对齐&#39;, position: &#39;outside&#39;, alignTo: &#39;edge&#39; },
+    labelLine: { name: &#39;引导线末端对齐&#39;, position: &#39;outside&#39;, alignTo: &#39;labelLine&#39; }
+};
+var setting = modes[mode] || modes.inside;
+var myChart = echarts.init(document.getElementById(&#39;chart&#39;));
+var option = {
+    title: {
+        text: &#39;某公司年度支出构成&#39;,
+        subtext: &#39;单位：万元  |  &#39; + setting.name,
+        left: &#39;center&#39;,
+        top: 30
+    },
+    tooltip: {
+        trigger: &#39;item&#39;,
+        formatter: &#39;{b}：{c} 万元（{d}%）&#39;
+    },
+    legend: {
+        bottom: 30,
+        data: [&#39;研发&#39;, &#39;市场&#39;, &#39;人力&#39;, &#39;运营&#39;, &#39;其他&#39;]
+    },
+    series: [{
+        name: &#39;年度支出&#39;,
+        type: &#39;pie&#39;,
+        radius: &#39;55%&#39;,
+        center: [&#39;50%&#39;, &#39;50%&#39;],
+        data: [
+            { value: 500, name: &#39;研发&#39; },
+            { value: 350, name: &#39;市场&#39; },
+            { value: 280, name: &#39;人力&#39; },
+            { value: 200, name: &#39;运营&#39; },
+            { value: 120, name: &#39;其他&#39; }
+        ],
+        label: {
+            show: true,
+            formatter: &#39;{b}({c}万元)&#39;,
+            position: setting.position,
+            alignTo: setting.alignTo,
+            edgeDistance: &#39;12%&#39;,
+            distanceToLabelLine: 8,
+            fontSize: 16,
+            color: &#39;#222&#39;
+        },
+        labelLine: {
+            show: setting.position === &#39;outside&#39;,
+            length: 25,
+            length2: 35
+        },
+        emphasis: {
+            itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: &#39;rgba(0, 0, 0, 0.5)&#39;
+            }
+        }
+    }]
+};
+myChart.setOption(option);
+</code></pre><p class="copy-status" role="status"></p></section></div></div></main><footer>个人作品集 · 实验记录 <a href="#top">回到顶部 ↑</a></footer><script src="../library.js"></script></body></html>

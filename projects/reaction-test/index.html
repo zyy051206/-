@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="等待红灯变绿，测量你的反应速度。支持多轮测试、颜色辅助和本地成绩记录。">
+  <title>反应速度测试 · Reaction Lab</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2323262d'/%3E%3Cpath d='M18 4 8 18h7l-1 10 10-15h-7z' fill='%23ffce54'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <header class="site-header"><div class="nav-inner">
+    <a class="brand" href="./" aria-label="Reaction Lab 首页"><span class="brand-icon">ϟ</span>REACTION<span class="brand-light">LAB</span></a>
+    <nav aria-label="页面导航"><a class="current" href="#test">反应测试</a><a href="#records">我的记录</a><a href="#guide">测试说明</a></nav>
+    <span class="language">简体中文 <span aria-hidden="true">⌄</span></span>
+  </div></header>
+  <main>
+    <section class="intro" id="test">
+      <span class="eyebrow">发现你的反应潜力</span>
+      <h1>反应速度测试</h1>
+      <p>从看见到点击，你需要多久？</p>
+    </section>
+    <section class="test-shell" aria-label="反应速度测试">
+      <div class="test-toolbar"><div class="round-picker"><span class="toolbar-label">测试次数</span><div id="rounds" role="group" aria-label="选择测试次数"><button data-rounds="3" aria-pressed="false">3</button><button data-rounds="5" class="selected" aria-pressed="true">5</button><button data-rounds="10" aria-pressed="false">10</button><button data-rounds="15" aria-pressed="false">15</button><button data-rounds="20" aria-pressed="false">20</button><button data-rounds="30" aria-pressed="false">30</button><button data-rounds="100" aria-pressed="false">100</button></div></div><label class="assist-label"><input id="assist" type="checkbox"><span class="switch" aria-hidden="true"></span>颜色辅助</label></div>
+      <div class="stage" id="stage" data-state="idle" tabindex="0" role="button" aria-label="开始反应测试">
+        <div class="stage-top"><span id="stage-label">准备好了吗？</span><span id="round-label">共 5 次测试</span></div>
+        <div class="stage-content" aria-live="polite" aria-atomic="true">
+          <div class="signal" id="signal"><svg id="signal-icon" viewBox="0 0 32 32" aria-hidden="true"><path d="M19 3 7 19h9l-3 10L26 12h-9z"/></svg><span id="signal-word" hidden></span></div>
+          <h2 id="stage-title">等待变绿，即刻点击</h2>
+          <p id="stage-description">看到红灯时等待，变绿后尽快点击任意位置。</p>
+          <span class="start-button" id="stage-action">开始测试</span>
+          <p class="keyboard-hint" id="keyboard-hint"><kbd>Space</kbd> 空格键也可以操作</p>
+        </div>
+        <div class="stage-bottom"><span id="stage-footer">保持专注，无需提前猜测</span><span class="device-hint">鼠标 · 触屏 · 键盘</span></div>
+      </div>
+      <div class="progress-strip"><span id="progress-label">测试进度</span><div id="progress" class="progress" role="progressbar" aria-label="测试进度" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"></div><span id="progress-count">0 / 5</span><button id="cancel" class="text-button" hidden>退出测试</button></div>
+    </section>
+    <section id="result" class="result-card" hidden aria-labelledby="result-title">
+      <div class="result-heading"><div><span class="eyebrow">本次测试结果</span><h2 id="result-title">你的平均反应速度</h2></div><div class="result-number"><span id="average">—</span><small>ms</small></div></div>
+      <div class="result-stats"><div><span>最快一次</span><strong id="fastest">—</strong></div><div><span>最慢一次</span><strong id="slowest">—</strong></div><div><span>有效次数</span><strong id="total">—</strong></div></div>
+      <div id="trial-results" class="trial-results" aria-label="每次测试成绩"></div>
+      <form id="save-form"><label for="player">记录名称</label><input id="player" maxlength="24" placeholder="我的成绩" autocomplete="off"><button class="dark-button" type="submit" id="save-button">保存成绩</button><button type="button" id="retry" class="outline-button">再测一次</button></form><p id="save-status" role="status"></p>
+    </section>
+    <div class="how-it-works"><div><span class="step-number">01</span><div><h3>点击开始</h3><p>选择次数，放松并集中注意力</p></div></div><div><span class="step-number">02</span><div><h3>等待绿灯</h3><p>随机等待，提前点击不计成绩</p></div></div><div><span class="step-number">03</span><div><h3>查看结果</h3><p>完成各轮，获得平均反应时间</p></div></div></div>
+    <div class="lower-grid">
+      <section id="records" class="panel"><div class="panel-heading"><div><span class="eyebrow">PERSONAL BEST</span><h2>我的高分榜</h2></div><button id="clear-records" class="text-button">清空记录</button></div><p class="panel-note">你与自己的较量，每一次进步都算数。</p><div class="table-wrap"><table><thead><tr><th scope="col">排名</th><th scope="col">名称 / 日期</th><th scope="col">次数</th><th scope="col" class="align-right">平均用时</th></tr></thead><tbody id="record-body"></tbody></table></div><div class="empty" id="empty-records"><span aria-hidden="true">◎</span><strong>你的第一份成绩，值得期待</strong><p>完成测试并保存后，成绩会出现在这里。</p></div><p class="local-note" id="storage-note">记录仅保存在当前浏览器，不会上传。</p></section>
+      <section id="guide" class="panel guide"><div class="panel-heading"><div><span class="eyebrow">HOW IT WORKS</span><h2>关于反应速度</h2></div><span class="info-icon" aria-hidden="true">i</span></div><p>这个测试测量从视觉信号出现，到你作出点击之间的时间。数值越小，反应越快。</p><div class="reference-scale"><div class="scale-label"><span>更快</span><span>更慢</span></div><div class="scale-bar"></div><div class="scale-label"><span>100 ms</span><span>300 ms</span><span>500 ms</span></div></div><div class="tip"><strong>让结果更稳定</strong><p>保持相同设备和输入方式，选择安静的环境，并完成多次测试。屏幕刷新率、输入延迟和浏览器状态都会影响成绩。</p></div><p class="small-note">这是一个趣味测试，成绩不代表医学或专业能力评估。</p></section>
+    </div>
+    <section class="faq"><h2>常见问题</h2><details><summary>不小心提前点击了怎么办？</summary><p>这一轮不会计入成绩。点击重试，等待信号出现即可，已完成的有效成绩会保留。</p></details><details><summary>颜色辅助模式有什么不同？</summary><p>开启后，等待状态为蓝色，点击状态为黄色，同时显示“等”和“点”。无需仅凭红绿色区分信号。</p></details><details><summary>为什么换一台设备后，成绩会变化？</summary><p>测量包含显示与输入设备的延迟。对比进步时，尽量使用同一设备、浏览器和操作方式。切换到其他标签页会中断当前轮，避免产生无效成绩。</p></details></section>
+    <footer><span class="footer-brand">ϟ REACTION LAB</span><span>专注当下，快一点点。</span><a href="https://www.arealme.com/reaction-test/zh/" target="_blank" rel="noopener noreferrer">参考原站 ↗</a></footer>
+  </main>
+  <dialog id="clear-dialog"><h2>清空本地记录？</h2><p>这会删除当前浏览器中的所有测试成绩，无法恢复。</p><div class="dialog-actions"><button id="keep-records" class="outline-button">保留记录</button><button id="confirm-clear" class="dark-button">确认清空</button></div></dialog>
+</body>
+</html>

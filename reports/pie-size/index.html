@@ -1,0 +1,75 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="课程实验报告、完整配置与运行截图"><title>饼图的尺寸 · 个人作品集</title><link rel="stylesheet" href="../style.css"></head><body><header><a class="brand" href="../index.html">作品集 <span>/ 实验报告</span></a><nav><a href="../index.html">全部报告</a></nav></header><main id="top" class="detail"><div class="report-heading"><p class="eyebrow">数据可视化 / 实验三 · 第 10 题</p><h1>饼图的尺寸</h1><p class="lead">用两个并列饼图比较江苏五座城市的服装销售构成。</p><div class="actions"><a class="button primary" href="demo.html" target="_blank" rel="noopener">运行实验 ↗</a><a class="button" href="#code">查看完整配置 ↓</a></div></div><div class="reading"><aside aria-label="报告目录"><a href="#objective">实验目的</a><a href="#data">实验数据</a><a href="#method">实现要点</a><a href="#results">运行结果</a><a href="#code">完整配置</a></aside><div class="article"><section id="objective"><h2>实验目的</h2><p>掌握 radius 与 center，控制多个饼图的大小和位置。</p></section><section id="data"><h2>实验数据</h2><div class="table-wrap"><table><thead><tr><th scope="col">城市</th><th scope="col">女装 / 万元</th><th scope="col">男装 / 万元</th></tr></thead><tbody><tr><td>南京</td><td>2300</td><td>2200</td></tr><tr><td>苏州</td><td>3800</td><td>1780</td></tr><tr><td>无锡</td><td>1800</td><td>1100</td></tr><tr><td>南通</td><td>1020</td><td>870</td></tr><tr><td>常州</td><td>1270</td><td>900</td></tr></tbody></table></div></section><section id="method"><h2>实现要点</h2><ol><li>女装和男装的半径均为 40%，水平中心分别为 33% 和 66%。</li><li>标签位于扇形内部，字号为 10，分两行显示城市和百分比。</li></ol></section><section id="results"><h2>运行结果</h2><figure><a href="figure-1.png" target="_blank" rel="noopener"><img src="figure-1.png" alt="女装与男装销售额构成" loading="lazy"></a><figcaption>图 1　女装与男装销售额构成 <a href="figure-1.png" download>下载截图 ↓</a></figcaption></figure></section><section id="code"><div class="section-heading"><h2>完整配置</h2><button class="copy" type="button">复制代码</button></div><pre tabindex="0"><code>var option = {
+    title: [
+        {
+            text: &#39;江苏各城市男装与女装年度销售额构成&#39;,
+            subtext: &#39;单位：万元&#39;,
+            left: &#39;center&#39;,
+            top: 30
+        },
+        {
+            text: &#39;女装&#39;,
+            left: &#39;33%&#39;,
+            top: &#39;24%&#39;,
+            textAlign: &#39;center&#39;,
+            textStyle: { fontSize: 16 }
+        },
+        {
+            text: &#39;男装&#39;,
+            left: &#39;66%&#39;,
+            top: &#39;24%&#39;,
+            textAlign: &#39;center&#39;,
+            textStyle: { fontSize: 16 }
+        }
+    ],
+    tooltip: {
+        trigger: &#39;item&#39;,
+        formatter: &#39;{a}&lt;br/&gt;{b}：{c} 万元（{d}%）&#39;
+    },
+    legend: {
+        bottom: 30,
+        data: [&#39;南京&#39;, &#39;苏州&#39;, &#39;无锡&#39;, &#39;南通&#39;, &#39;常州&#39;]
+    },
+    series: [
+        {
+            name: &#39;女装销售额&#39;,
+            type: &#39;pie&#39;,
+            radius: &#39;40%&#39;,
+            center: [&#39;33%&#39;, &#39;50%&#39;],
+            label: {
+                show: true,
+                position: &#39;inside&#39;,
+                fontSize: 10,
+                formatter: &#39;{b}\n{d}%&#39;
+            },
+            labelLine: { show: false },
+            data: [
+                { value: 2300, name: &#39;南京&#39; },
+                { value: 3800, name: &#39;苏州&#39; },
+                { value: 1800, name: &#39;无锡&#39; },
+                { value: 1020, name: &#39;南通&#39; },
+                { value: 1270, name: &#39;常州&#39; }
+            ]
+        },
+        {
+            name: &#39;男装销售额&#39;,
+            type: &#39;pie&#39;,
+            radius: &#39;40%&#39;,
+            center: [&#39;66%&#39;, &#39;50%&#39;],
+            label: {
+                show: true,
+                position: &#39;inside&#39;,
+                fontSize: 10,
+                formatter: &#39;{b}\n{d}%&#39;
+            },
+            labelLine: { show: false },
+            data: [
+                { value: 2200, name: &#39;南京&#39; },
+                { value: 1780, name: &#39;苏州&#39; },
+                { value: 1100, name: &#39;无锡&#39; },
+                { value: 870, name: &#39;南通&#39; },
+                { value: 900, name: &#39;常州&#39; }
+            ]
+        }
+    ]
+};
+myChart.setOption(option);</code></pre><p class="copy-status" role="status"></p></section></div></div></main><footer>个人作品集 · 实验记录 <a href="#top">回到顶部 ↑</a></footer><script src="../library.js"></script></body></html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实验二 标签优化</title>
+  <style>
+    body { margin: 0; background: #fff; font-family: "Microsoft YaHei", sans-serif; }
+    #chart { width: 100vw; height: 100vh; min-height: 500px; }
+  </style>
+</head>
+<body>
+<div id="chart"></div>
+<script src="../assets/echarts.min.js"></script>
+<script>
+var mode = new URLSearchParams(location.search).get('mode') || 'inside';
+var modes = {
+    inside: { name: '标签显示在扇形内部', position: 'inside', alignTo: 'none' },
+    edge: { name: '外部标签文字对齐', position: 'outside', alignTo: 'edge' },
+    labelLine: { name: '引导线末端对齐', position: 'outside', alignTo: 'labelLine' }
+};
+var setting = modes[mode] || modes.inside;
+var myChart = echarts.init(document.getElementById('chart'));
+var option = {
+    title: {
+        text: '某公司年度支出构成',
+        subtext: '单位：万元  |  ' + setting.name,
+        left: 'center',
+        top: 30
+    },
+    tooltip: {
+        trigger: 'item',
+        formatter: '{b}：{c} 万元（{d}%）'
+    },
+    legend: {
+        bottom: 30,
+        data: ['研发', '市场', '人力', '运营', '其他']
+    },
+    series: [{
+        name: '年度支出',
+        type: 'pie',
+        radius: '55%',
+        center: ['50%', '50%'],
+        data: [
+            { value: 500, name: '研发' },
+            { value: 350, name: '市场' },
+            { value: 280, name: '人力' },
+            { value: 200, name: '运营' },
+            { value: 120, name: '其他' }
+        ],
+        label: {
+            show: true,
+            formatter: '{b}({c}万元)',
+            position: setting.position,
+            alignTo: setting.alignTo,
+            edgeDistance: '12%',
+            distanceToLabelLine: 8,
+            fontSize: 16,
+            color: '#222'
+        },
+        labelLine: {
+            show: setting.position === 'outside',
+            length: 25,
+            length2: 35
+        },
+        emphasis: {
+            itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+        }
+    }]
+};
+myChart.setOption(option);
+window.addEventListener('resize', function () { myChart.resize(); });
+</script>
+</body>
+</html>

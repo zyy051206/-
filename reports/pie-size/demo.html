@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>实验三 饼图的尺寸</title>
+  <style>
+    body { margin: 0; background: white; font-family: "Microsoft YaHei", sans-serif; }
+    #chart { width: 100vw; height: 100vh; min-height: 500px; }
+  </style>
+</head>
+<body>
+<div id="chart"></div>
+<script src="../assets/echarts.min.js"></script>
+<script>
+var myChart = echarts.init(document.getElementById('chart'));
+var option = {
+    title: [
+        {
+            text: '江苏各城市男装与女装年度销售额构成',
+            subtext: '单位：万元',
+            left: 'center',
+            top: 30
+        },
+        {
+            text: '女装',
+            left: '33%',
+            top: '24%',
+            textAlign: 'center',
+            textStyle: { fontSize: 16 }
+        },
+        {
+            text: '男装',
+            left: '66%',
+            top: '24%',
+            textAlign: 'center',
+            textStyle: { fontSize: 16 }
+        }
+    ],
+    tooltip: {
+        trigger: 'item',
+        formatter: '{a}<br/>{b}：{c} 万元（{d}%）'
+    },
+    legend: {
+        bottom: 30,
+        data: ['南京', '苏州', '无锡', '南通', '常州']
+    },
+    series: [
+        {
+            name: '女装销售额',
+            type: 'pie',
+            radius: '40%',
+            center: ['33%', '50%'],
+            label: {
+                show: true,
+                position: 'inside',
+                fontSize: 10,
+                formatter: '{b}\n{d}%'
+            },
+            labelLine: { show: false },
+            data: [
+                { value: 2300, name: '南京' },
+                { value: 3800, name: '苏州' },
+                { value: 1800, name: '无锡' },
+                { value: 1020, name: '南通' },
+                { value: 1270, name: '常州' }
+            ]
+        },
+        {
+            name: '男装销售额',
+            type: 'pie',
+            radius: '40%',
+            center: ['66%', '50%'],
+            label: {
+                show: true,
+                position: 'inside',
+                fontSize: 10,
+                formatter: '{b}\n{d}%'
+            },
+            labelLine: { show: false },
+            data: [
+                { value: 2200, name: '南京' },
+                { value: 1780, name: '苏州' },
+                { value: 1100, name: '无锡' },
+                { value: 870, name: '南通' },
+                { value: 900, name: '常州' }
+            ]
+        }
+    ]
+};
+myChart.setOption(option);
+window.addEventListener('resize', function () { myChart.resize(); });
+</script>
+</body>
+</html>

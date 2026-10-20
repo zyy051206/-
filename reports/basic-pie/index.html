@@ -1,0 +1,40 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="课程实验报告、完整配置与运行截图"><title>基础饼图 · 个人作品集</title><link rel="stylesheet" href="../style.css"></head><body><header><a class="brand" href="../index.html">作品集 <span>/ 实验报告</span></a><nav><a href="../index.html">全部报告</a></nav></header><main id="top" class="detail"><div class="report-heading"><p class="eyebrow">数据可视化 / 实验一 · 第 8 题</p><h1>基础饼图</h1><p class="lead">从商品销售数据出发，配置第一个可运行的饼图。</p><div class="actions"><a class="button primary" href="demo.html" target="_blank" rel="noopener">运行实验 ↗</a><a class="button" href="#code">查看完整配置 ↓</a></div></div><div class="reading"><aside aria-label="报告目录"><a href="#objective">实验目的</a><a href="#data">实验数据</a><a href="#method">实现要点</a><a href="#results">运行结果</a><a href="#code">完整配置</a></aside><div class="article"><section id="objective"><h2>实验目的</h2><p>掌握饼图初始化、数据对象格式与品类名称显示。</p></section><section id="data"><h2>实验数据</h2><div class="table-wrap"><table><thead><tr><th scope="col">类别</th><th scope="col">金额 / 万元</th></tr></thead><tbody><tr><td>服装</td><td>320</td></tr><tr><td>数码</td><td>450</td></tr><tr><td>食品</td><td>180</td></tr><tr><td>图书</td><td>90</td></tr><tr><td>家居</td><td>260</td></tr></tbody></table></div></section><section id="method"><h2>实现要点</h2><ol><li>使用 type: pie 绘制饼图，name 与 value 分别保存品类和销售额。</li><li>标签显示品类和百分比；悬停显示销售额，单位为万元。</li></ol></section><section id="results"><h2>运行结果</h2><figure><a href="figure-1.png" target="_blank" rel="noopener"><img src="figure-1.png" alt="基础饼图运行效果" loading="lazy"></a><figcaption>图 1　基础饼图运行效果 <a href="figure-1.png" download>下载截图 ↓</a></figcaption></figure></section><section id="code"><div class="section-heading"><h2>完整配置</h2><button class="copy" type="button">复制代码</button></div><pre tabindex="0"><code>var option = {
+    title: {
+        text: &#39;各类商品销售额占比&#39;,
+        subtext: &#39;单位：万元&#39;,
+        left: &#39;center&#39;,
+        top: 30
+    },
+    tooltip: {
+        trigger: &#39;item&#39;,
+        formatter: &#39;{b}：{c} 万元（{d}%）&#39;
+    },
+    legend: {
+        orient: &#39;horizontal&#39;,
+        bottom: 30,
+        data: [&#39;服装&#39;, &#39;数码&#39;, &#39;食品&#39;, &#39;图书&#39;, &#39;家居&#39;]
+    },
+    series: [{
+        name: &#39;销售额&#39;,
+        type: &#39;pie&#39;,
+        radius: &#39;55%&#39;,
+        center: [&#39;50%&#39;, &#39;50%&#39;],
+        data: [
+            { value: 320, name: &#39;服装&#39; },
+            { value: 450, name: &#39;数码&#39; },
+            { value: 180, name: &#39;食品&#39; },
+            { value: 90, name: &#39;图书&#39; },
+            { value: 260, name: &#39;家居&#39; }
+        ],
+        label: { show: true, formatter: &#39;{b}\n{d}%&#39;, fontSize: 16 },
+        labelLine: { show: true },
+        emphasis: {
+            itemStyle: {
+                shadowBlur: 10,
+                shadowOffsetX: 0,
+                shadowColor: &#39;rgba(0, 0, 0, 0.5)&#39;
+            }
+        }
+    }]
+};
+myChart.setOption(option);</code></pre><p class="copy-status" role="status"></p></section></div></div></main><footer>个人作品集 · 实验记录 <a href="#top">回到顶部 ↑</a></footer><script src="../library.js"></script></body></html>
